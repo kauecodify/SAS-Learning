@@ -1,0 +1,34 @@
+PROC SQL;
+	CREATE TABLE IDH_ANALYSIS (
+	    ID INT,
+        CIDADE CHAR(2),
+        REGIAO CHAR(50),
+        EDUCACAO DECIMAL(3),
+        TAXA_MORTALIDADE DECIMAL(5,2),
+        RENDA_PER_CAP DECIMAL(5,2),
+        TAXA_PERICULOSIDADE DECIMAL(5,2)
+    );
+    INSERT INTO IDH_ANALYSIS
+    VALUES (1, 'SP', 'NORTE', 6.2, 6.1, 4.4, 6.0)
+    VALUES (2, 'RJ', 'SUL', 5.8, 5.6, 4.9, 6.3)
+    VALUES (3, 'MG', 'SUDESTE', 6.3, 6.1, 5.8, 6.0)
+    VALUES (4, 'BA', 'NORDESTE', 4.9, 5.3, 4.5, 5.0)
+    VALUES     (5, 'RS', 'SUL', 7.1, 6.8, 6.5, 7.0)
+    VALUES     (6, 'CE', 'NORDESTE', 5.2, 5.0, 4.8, 5.3)
+    VALUES     (7, 'PE', 'NORDESTE', 5.7, 5.4, 5.1, 5.8)
+    VALUES     (8, 'PR', 'SUL', 6.9, 6.7, 6.3, 6.8)
+    VALUES     		(9, 'SC', 'SUL', 7.0, 6.9, 6.6, 6.9)
+    VALUES     		(10, 'GO', 'CENTRO-OESTE', 5.9, 5.8, 5.6, 6.1);
+        
+        CREATE TABLE IDH_EDUC_RENDA AS
+        SELECT EDUCACAO, RENDA_PER_CAP
+        FROM IDH_ANALYSIS;
+/* 	QUIT; */
+	RUN;
+	
+	PROC SGPLOT DATA=IDH_EDUC_RENDA;
+	SCATTER X=EDUCACAO Y=RENDA_PER_CAP / MARKERATTRS=(COLOR=blue);
+	TITLE "Relação entre Educação e Renda per Capita";
+	XAXIS LABEL="ÍNDICE DE EDUCAÇÃO";
+	YAXIS LABEL="RENDA PER CAPITA";
+RUN;
